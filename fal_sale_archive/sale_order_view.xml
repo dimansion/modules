@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <!-- Sale Order tree view -->
+       <record id="view_order_tree_inherit_fal_sale_archive" model="ir.ui.view">
+            <field name="name">view.order.tree.inherit.fal.sale.archive</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//tree/field[@name='name']" position="after">
+                        <field name="active" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Sale Quotation tree view -->
+        <record id="view_quotation_tree_inherit_fal_sale_archive" model="ir.ui.view">
+            <field name="name">view.quotation.tree.inherit.fal.sale.archive</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//tree/field[@name='name']" position="after">
+                        <field name="active" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Sale Order/ Quotation filter view -->
+        <record id="view_sales_order_filter_inherit_fal_sale_archive" model="ir.ui.view">
+            <field name="name">view.sales.order.filter.inherit.fal.sale.archive</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//search/filter[@name='my_sale_orders_filter']" position="after">
+                        <separator/>
+                        <filter string="Archived" domain="[('active','=',False)]" name="archived_sale_orders_filter"/>
+                        <separator/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Sale Order/ Quotation form view -->
+        <record id="view_order_form_inherit_fal_sale_archive" model="ir.ui.view">
+            <field name="name">view.order.form.inherit.fal.sale.archive</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//button[@name='action_cancel']" position="after">
+                        <button name="action_archieve" type="object" class="oe_stat_button" icon="STOCK_DIRECTORY" string='Archive' attrs="{'invisible': [('active','=', False)]}"/>
+                        <button name="action_unarchieve" type="object" class="oe_stat_button" icon="STOCK_DIRECTORY" string='Unarchive' attrs="{'invisible': [('active','=', True)]}"/>
+                    </xpath>
+                    <field name='fiscal_position' position='after'>
+                        <field name='active' invisible='1'/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <!-- Invoice Order tree view -->
+       <record id="view_invoice_tree_inherit_fal_invoice_archive" model="ir.ui.view">
+            <field name="name">view.invoice.tree.inherit.fal.invoice.archive</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//tree/field[@name='name']" position="after">
+                        <field name="active" invisible="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Invoice Order filter view -->
+        <record id="view_invoice_filter_inherit_fal_invoice_archive" model="ir.ui.view">
+            <field name="name">view.invoice.order.filter.inherit.fal.invoice.archive</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//search/filter[@name='invoices']" position="after">
+                        <separator/>
+                        <filter string="Archived" domain="[('active','=',False)]" name="archived_account_invoice_filter"/>
+                        <separator/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Invoice Order form view -->
+        <record id="view_invoice_form_inherit_fal_invoice_archive" model="ir.ui.view">
+            <field name="name">view.invoice.form.inherit.fal.invoice.archive</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//button[@name='action_cancel_draft']" position="after">
+                        <button name="action_archieve" type="object" class="oe_stat_button" icon="STOCK_DIRECTORY" string='Archive' attrs="{'invisible': [('active','=', False)]}"/>
+                        <button name="action_unarchieve" type="object" class="oe_stat_button" icon="STOCK_DIRECTORY" string='Unarchive' attrs="{'invisible': [('active','=', True)]}"/>
+                    </xpath>
+                    <field name='move_id' position='after'>
+                        <field name='active' invisible='1'/>
+                    </field>
+                </data>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
